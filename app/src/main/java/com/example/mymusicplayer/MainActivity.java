@@ -3,9 +3,12 @@ package com.example.mymusicplayer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -42,6 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, items);
                         listView.setAdapter(adapter);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                                String currentSong = listView.getItemAtPosition(position).toString();
+                                intent.putExtra("songList", mySongs);
+                                intent.putExtra("currentSong", currentSong);
+                                intent.putExtra("position", position);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     @Override
